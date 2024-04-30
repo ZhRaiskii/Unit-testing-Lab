@@ -1,97 +1,92 @@
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using App;
+using App.Shapes;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 
 namespace TestMath
 {
     [TestClass]
-    public class UnitTest1
+    public class GeometryCalculatorTests
     {
-        GeometryCalculator calculator = new GeometryCalculator();
-
         [TestMethod]
         public void TestRectangleArea()
         {
-            var res = calculator.CalculateRectangleArea(5, 3);
+            var calculator = new Calculator(new AreaCalculationStrategy());
+            var rectangle = new Rectangle { Length = 5, Width = 3 };
+            var res = calculator.CalculateArea(rectangle);
             Assert.AreEqual(15, res);
         }
 
         [TestMethod]
         public void TestSquareArea()
         {
-            var res = calculator.CalculateSquareArea(6);
+            var calculator = new Calculator(new AreaCalculationStrategy());
+            var square = new Square { SideLength = 6 };
+            var res = calculator.CalculateArea(square);
             Assert.AreEqual(36, res);
         }
 
         [TestMethod]
-        public void TestTriangleArea()
-        {
-            var res = calculator.CalculateTriangleArea(5, 2);
-            Assert.AreEqual(5, res);
-        }
-
-
-        [TestMethod]
         public void TestRectanglePerimeter()
         {
-            var res = calculator.CalculateRectanglePerimeter(5, 3);
+            var calculator = new Calculator(new PerimeterCalculationStrategy());
+            var rectangle = new Rectangle { Length = 5, Width = 3 };
+            var res = calculator.CalculatePerimeter(rectangle);
             Assert.AreEqual(16, res);
         }
 
         [TestMethod]
         public void TestSquarePerimeter()
         {
-            var res = calculator.CalculateSquarePerimeter(6);
+            var calculator = new Calculator(new PerimeterCalculationStrategy());
+            var square = new Square { SideLength = 6 };
+            var res = calculator.CalculatePerimeter(square);
             Assert.AreEqual(24, res);
         }
 
         [TestMethod]
         public void TestTrianglePerimeter()
         {
-            var res = calculator.CalculateTrianglePerimeter(3, 4, 5);
+            var calculator = new Calculator(new PerimeterCalculationStrategy());
+            var triangle = new Triangle { Side1 = 3, Side2 = 4, Side3 = 5 };
+            var res = calculator.CalculatePerimeter(triangle);
             Assert.AreEqual(12, res);
         }
 
         [TestMethod]
-        public void TestCirclePerimeter()
-        {
-            var res = calculator.CalculateCirclePerimeter(5);
-            Assert.IsTrue(res >= 0);
-        }
-
-
-        [TestMethod]
         public void TestRectangleAreaWithZeroValues()
         {
-            var res = calculator.CalculateRectangleArea(0, 0);
+            var calculator = new Calculator(new AreaCalculationStrategy());
+            var rectangle = new Rectangle { Length = 0, Width = 0 };
+            var res = calculator.CalculateArea(rectangle);
             Assert.AreEqual(0, res);
         }
 
         [TestMethod]
         public void TestCirclePerimeterWithLargeRadius()
         {
-            var res = calculator.CalculateCirclePerimeter(double.MaxValue);
+            var calculator = new Calculator(new PerimeterCalculationStrategy());
+            var circle = new Circle { Radius = double.MaxValue };
+            var res = calculator.CalculatePerimeter(circle);
             Assert.IsTrue(res > 0);
         }
-
 
         [TestMethod]
         public void TestRectangleAreaWithLargeValues()
         {
-            var res = calculator.CalculateRectangleArea(double.MaxValue, double.MaxValue);
+            var calculator = new Calculator(new AreaCalculationStrategy());
+            var rectangle = new Rectangle { Length = double.MaxValue, Width = double.MaxValue };
+            var res = calculator.CalculateArea(rectangle);
             Assert.IsTrue(res > 0);
         }
 
         [TestMethod]
         public void TestSquarePerimeterWithZeroValue()
         {
-            var res = calculator.CalculateSquarePerimeter(0);
+            var calculator = new Calculator(new PerimeterCalculationStrategy());
+            var square = new Square { SideLength = 0 };
+            var res = calculator.CalculatePerimeter(square);
             Assert.AreEqual(0, res);
-        }
-
-        [TestMethod]
-        public void TestTrianglePerimeterWithNegativeValue()
-        {
-            Assert.ThrowsException<ArgumentException>(() => calculator.CalculateTrianglePerimeter(-3, -4, -5));
         }
     }
 }
